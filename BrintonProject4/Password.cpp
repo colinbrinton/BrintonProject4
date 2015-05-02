@@ -113,38 +113,46 @@ using namespace std; // Announces to the compiler that members of the namespace
 	 getline(cin, password);
 	 cout << endl;
 
-	 cout << password;
-
-	 pLength = password.length();
 
 	 /*if (pLength >= MIN_PASS)
 		 cout << "Error: Password is less than 6 charecters long";*/
-
-	 for (int count = 0; count < pLength; count++)
+	 while ((!upper) || (!lower) || (!digit) || (!digit))
 	 {
-		 if (isupper(password[count]))
-			 upper = true;
-		 if (islower(password[count]))
-			 lower = true;
-		 if (isdigit(password[count]))
-			 digit = true;
-		 if (pLength >= MIN_PASS)
-			 length = true;
+		 upper = lower = digit = length = false;
+
+		 pLength = password.length();
+
+		 for (int count = 0; count < pLength; count++)
+		 {
+			 if (isupper(password[count]))
+				 upper = true;
+			 if (islower(password[count]))
+				 lower = true;
+			 if (isdigit(password[count]))
+				 digit = true;
+			 if (pLength >= MIN_PASS)
+				 length = true;
+		 }
+
+		 if ((!upper) || (!lower) || (!digit) || (!digit))
+			 cout << "Error: ";
+		 if (!upper)
+			 cout << "Password does not contain an upper case letter." << endl;
+		 if (!lower)
+			 cout << "Password does not contain a lower case letter." << endl;
+		 if (!digit)
+			 cout << "Passowrd does not contain a digit." << endl;
+		 if (!length)
+			 cout << "Password is not at least six charecters long." << endl;
+
+		 if ((!upper) || (!lower) || (!digit) || (!digit))
+		 {
+			 cout << endl << "Please enter another password: ";
+			 getline(cin, password);
+		 }
 	 }
-	 
-	 if ((!upper) || (!lower) || (!digit) || (!digit))
-		 cout << "Error: ";
-	 if (!upper)
-		 cout << "Password does not contain an upper case letter." << endl;
-	 if (!lower)
-		 cout << "Password does not contain a lower case letter." << endl;
-	 if (!digit)
-		 cout << "Passowrd does not contain a digit." << endl;
-	 if (!length)
-		 cout << "Password is not at least six charecters long." << endl;
 
-
-
+	 cout << "Valid Passord!" << endl;
 
 	// This prevents the Console Window from closing during debug mode using
 	// the Visual Studio IDE.
