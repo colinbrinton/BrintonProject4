@@ -25,22 +25,24 @@
  * --------------
  *  Device                              Description
  * --------  ------------------------------------------------------------------
- * Keyboard  ** Describe any inputs from the User; otherwise, None **
+ * Keyboard  User enters password to be verified
  *
  *
  * Program Outputs
  * ---------------
  *  Device                            Description
  * --------  ------------------------------------------------------------------
- * Monitor   ** Describe any Console display; otherwise, None **
+ * Monitor   Prompt user to enter password
+ *			 Display password requirements
+ *			 Display form to enter password
  *
  *
  * File Methods
  * ------------
- *     Name                             Description
- * ------------  --------------------------------------------------------------
- * main          Program entry point method
- * **** Add name and description of any other methods defined in this file ****
+ *     Name								 Description
+ * ------------		 --------------------------------------------------------------
+ * main				 Program entry point method
+ * checkPassword	 Validates password, reprompt until valid entry is received
  *
  ******************************************************************************
  */
@@ -59,15 +61,12 @@ using namespace std; // Announces to the compiler that members of the namespace
 * 
 * Method Description
 * ------------------
-* ** For method main(), describe the application program from the client's
-* ** perspective, which includes any User inputs required and expected
-* ** Console output, and any other pertinent information about the program.
-* ** For other methods, describe the functionality of the method.
-* ** This WILL take several lines for a satisfactory description!
+* Method provides the initial prompt for user to enter a password. The password
+* requirements are displayed. 
 *
 * Pre-Conditions
 * --------------
-* ** Describe any assumptions made by the method; otherwise specify: None **
+* None
 *
 * Method Arguments
 * ----------------
@@ -89,19 +88,16 @@ using namespace std; // Announces to the compiler that members of the namespace
 *
 *******************************************************************************
 */
+
+// Function Prototype
+void checkPassword(string);
+
  int main()          
 {
 	 // Constant "const" Vlaue Declarations
 	 const int NO_ERRORS = 0;
-	 const int MIN_PASS = 6;
 
 	 string password;
-	 int pLength;
-
-	 bool upper = false,
-		  lower = false,
-		  digit = false,
-		  length = false;
 
 	 cout << "Please enter a password. Password must contain:" << endl << endl;
 
@@ -113,9 +109,29 @@ using namespace std; // Announces to the compiler that members of the namespace
 	 getline(cin, password);
 	 cout << endl;
 
+	 checkPassword(password);
 
-	 /*if (pLength >= MIN_PASS)
-		 cout << "Error: Password is less than 6 charecters long";*/
+	// This prevents the Console Window from closing during debug mode using
+	// the Visual Studio IDE.
+	// Note: Generally, you should not remove this code
+	cin.ignore(cin.rdbuf()->in_avail());
+	cout << "\nPress only the 'Enter' key to exit program: ";
+	cin.get();
+
+	return NO_ERRORS;
+}
+
+ void checkPassword(string password)
+ {
+	 const int MIN_PASS = 6;
+
+	 int pLength = NULL;
+
+	 bool upper = false,
+		 lower = false,
+		 digit = false,
+		 length = false;
+
 	 while ((!upper) || (!lower) || (!digit) || (!digit))
 	 {
 		 upper = lower = digit = length = false;
@@ -149,18 +165,9 @@ using namespace std; // Announces to the compiler that members of the namespace
 		 {
 			 cout << endl << "Please enter another password: ";
 			 getline(cin, password);
+			 cout << endl;
 		 }
 	 }
 
 	 cout << "Valid Passord!" << endl;
-
-	// This prevents the Console Window from closing during debug mode using
-	// the Visual Studio IDE.
-	// Note: Generally, you should not remove this code
-	cin.ignore(cin.rdbuf()->in_avail());
-	cout << "\nPress only the 'Enter' key to exit program: ";
-	cin.get();
-
-	return NO_ERRORS;
-}
-
+ }
