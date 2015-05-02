@@ -1,6 +1,6 @@
 /******************************************************************************
  * Bellevue Class: PROG 113
- *           Term: Speing 2015
+ *           Term: Spring 2015
  *     Instructor: Robert Main
  *
  * Solution/Project Name: BrintonProject4
@@ -56,6 +56,9 @@
 using namespace std; // Announces to the compiler that members of the namespace
                      // "std" are utilized in this program
 
+// Function Prototype
+void checkPassword(string);
+
 /******************************************************************************
 * Method: main()
 * 
@@ -83,32 +86,34 @@ using namespace std; // Announces to the compiler that members of the namespace
 *
 * Invoked Methods
 * ---------------
-*     Name                             Description
-* ------------  --------------------------------------------------------------
+*     Name							       Description
+* ------------		 --------------------------------------------------------------
+* checkPassword		  Validates password, reprompt until valid entry is received
 *
 *******************************************************************************
 */
-
-// Function Prototype
-void checkPassword(string);
-
  int main()          
 {
-	 // Constant "const" Vlaue Declarations
+	 // Constant "const" Value Declarations
 	 const int NO_ERRORS = 0;
 
+	 //Declare string to hold user password
 	 string password;
 
+	 //Prompt for password entry
 	 cout << "Please enter a password. Password must contain:" << endl << endl;
 
-	 cout << "- At least six charecters" << endl;
+	 //Password Requirements
+	 cout << "- At least six characters" << endl;
 	 cout << "- At least one uppercase and one lowercase letter" << endl;
 	 cout << "- At least one digit" << endl << endl;
 
+	 //Input form
 	 cout << "Password: ";
 	 getline(cin, password);
 	 cout << endl;
 
+	 //Call password validation method
 	 checkPassword(password);
 
 	// This prevents the Console Window from closing during debug mode using
@@ -121,37 +126,82 @@ void checkPassword(string);
 	return NO_ERRORS;
 }
 
+ /******************************************************************************
+ * Method: checkPassword()
+ *
+ * Method Description
+ * ------------------
+ * Accepts user entered password as argument. Uses a series of bool variables as
+ * flags to check for the presence of the various program requirements. Displays
+ * "Valid Password!" if the user password meets the requirements. Otherwise, the
+ * method displays which requirement or requirements is/are missing and prompts
+ * user to enter a new password.
+ *
+ * Pre-Conditions
+ * --------------
+ * Valid string argument needs to be passed to the method
+ *
+ * Method Arguments
+ * ----------------
+ *   Type        Name                        Description
+ * --------  -------------  ----------------------------------------------------
+ * string	 password		User entered password
+ *
+ * Return Value
+ * ------------
+ *   None
+ *
+ * Invoked Methods
+ * ---------------
+ *  None
+ *
+ *******************************************************************************
+ */
  void checkPassword(string password)
  {
+	 // Minimum password length in charecters
 	 const int MIN_PASS = 6;
 
+	 // Declare and initialize variable to store password length
 	 int pLength = NULL;
 
+	 // Declare and initialize flags for password requirements
 	 bool upper = false,
 		 lower = false,
 		 digit = false,
 		 length = false;
 
+	 // Overarching loop to reprompt if password is invalid
 	 while ((!upper) || (!lower) || (!digit) || (!digit))
 	 {
+		 //Reset flags after each invalid password
 		 upper = lower = digit = length = false;
 
+		 //Get password length
 		 pLength = password.length();
 
+		 //Check each character in string for presence of requirements
 		 for (int count = 0; count < pLength; count++)
 		 {
+			 // Is there an uppercase letter?
 			 if (isupper(password[count]))
 				 upper = true;
+			 // Is there a lower case letter?
 			 if (islower(password[count]))
 				 lower = true;
+			 // Is there a digit?
 			 if (isdigit(password[count]))
 				 digit = true;
+			 // Does the password meet the length requirement?
 			 if (pLength >= MIN_PASS)
 				 length = true;
 		 }
 
+		 // If password does not meet all of the requirements display an error
 		 if ((!upper) || (!lower) || (!digit) || (!digit))
 			 cout << "Error: ";
+
+		 //Specify missing criteria
 		 if (!upper)
 			 cout << "Password does not contain an upper case letter." << endl;
 		 if (!lower)
@@ -159,8 +209,9 @@ void checkPassword(string);
 		 if (!digit)
 			 cout << "Passowrd does not contain a digit." << endl;
 		 if (!length)
-			 cout << "Password is not at least six charecters long." << endl;
+			 cout << "Password is not at least six characters long." << endl;
 
+		 // If password is not valid, prompt for a new entry
 		 if ((!upper) || (!lower) || (!digit) || (!digit))
 		 {
 			 cout << endl << "Please enter another password: ";
@@ -169,5 +220,6 @@ void checkPassword(string);
 		 }
 	 }
 
-	 cout << "Valid Passord!" << endl;
+	 // Display confirmation message
+	 cout << "Valid Password!" << endl;
  }
