@@ -172,10 +172,11 @@ void checkPassword(string);
 		 length = false;
 
 	 // Overarching loop to reprompt if password is invalid
-	 while ((!upper) || (!lower) || (!digit) || (!digit))
+	 while ((!upper) || (!lower) || (!digit) || (pLength < MIN_PASS))
 	 {
 		 //Reset flags after each invalid password
 		 upper = lower = digit = length = false;
+		 pLength = NULL;
 
 		 //Get password length
 		 pLength = password.length();
@@ -198,7 +199,7 @@ void checkPassword(string);
 		 }
 
 		 // If password does not meet all of the requirements display an error
-		 if ((!upper) || (!lower) || (!digit) || (!digit))
+		 if ((!upper) || (!lower) || (!digit) || (pLength < MIN_PASS))
 			 cout << "Error: ";
 
 		 //Specify missing criteria
@@ -207,12 +208,12 @@ void checkPassword(string);
 		 if (!lower)
 			 cout << "Password does not contain a lower case letter." << endl;
 		 if (!digit)
-			 cout << "Passowrd does not contain a digit." << endl;
-		 if (!length)
+			 cout << "Password does not contain a digit." << endl;
+		 if (pLength < MIN_PASS)
 			 cout << "Password is not at least six characters long." << endl;
 
 		 // If password is not valid, prompt for a new entry
-		 if ((!upper) || (!lower) || (!digit) || (!digit))
+		 if ((!upper) || (!lower) || (!digit) || (pLength < MIN_PASS))
 		 {
 			 cout << endl << "Please enter another password: ";
 			 getline(cin, password);
